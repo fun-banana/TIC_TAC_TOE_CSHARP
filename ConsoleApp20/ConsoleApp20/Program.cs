@@ -26,138 +26,158 @@ namespace ConsoleApp20
 			//Console.WriteLine("║7║8║9║");
 			//Console.WriteLine("╚═╩═╩═╝");
 
-
 		static void Main(string[] args)
 		{
-			string Cells = "╔═╦═╦═╗\n║1║2║3║\n╠═╬═╬═╣\n║4║5║6║\n╠═╬═╬═╣\n║7║8║9║\n╚═╩═╩═╝";
-			int[,] WinsCombinations = new int[8, 3] { { 2, 5, 8 }, { 3, 5, 7 }, { 1, 5, 9 }, { 4, 5, 6 }, { 1, 2, 3 }, { 1, 4, 7 }, { 7, 8, 9 }, { 3, 6, 9 } };
-			int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-			int[] Player = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			int NumberCell;
-			int test = 0;
-			int introduced = 0;
-			bool finish = false;
+			ConsoleKeyInfo YesOrNo;
 
-			Console.WriteLine(Cells);
-
-			while(true)
+			do
 			{
-				//
-				while (true)
-				{
-					try
-					{
-						do
-						{
-							NumberCell = int.Parse(Console.ReadLine());
-						}
-						while (NumberCell != FreeCells[NumberCell - 1]);
-						break;
-					}
-					catch (Exception)
-					{
-						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("Enter Number 1-9");
-						Console.ForegroundColor = ConsoleColor.White;
-					}
-				}
+				string Cells = "  ╔═╦═╦═╗\n  ║1║2║3║\n  ╠═╬═╬═╣\n  ║4║5║6║\n  ╠═╬═╬═╣\n  ║7║8║9║\n  ╚═╩═╩═╝";
+				int[,] WinsCombinations = new int[8, 3] { { 2, 5, 8 }, { 3, 5, 7 }, { 1, 5, 9 }, { 4, 5, 6 }, { 1, 2, 3 }, { 1, 4, 7 }, { 7, 8, 9 }, { 3, 6, 9 } };
+				int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+				int[] Player = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+				int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+				int NumberCell;
+				int test = 0;
+				int introduced = 0;
+				bool finish = false;
 
-				introduced++;
-				string str = Convert.ToString(NumberCell);
-				Cells = Cells.Replace(str, "x");
-				FreeCells[NumberCell - 1] = 0;
-				Player[NumberCell - 1] = NumberCell;
-				
-				// Check whether the player has won
-				for (int j = 0; j < 8; j++)
+				Console.Clear();
+				Console.WriteLine(Cells);
+
+				while (true) // One game
 				{
-					for (int z = 0; z < 3; z++)
+					// Input player progress
+					while (true)
 					{
-						if (WinsCombinations[j, z] == Player[WinsCombinations[j, z] - 1])
+						try
 						{
-							test++; 
+							do
+							{
+								NumberCell = int.Parse(Console.ReadLine());
+							}
+							while (NumberCell != FreeCells[NumberCell - 1]);
+							break;
+						}
+						catch (Exception)
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("Enter Number 1-9");
+							Console.ForegroundColor = ConsoleColor.White;
 						}
 					}
-					if (test == 3)
+					//
+
+					//
+					introduced++;
+					string str = Convert.ToString(NumberCell);
+					Cells = Cells.Replace(str, "x");
+					FreeCells[NumberCell - 1] = 0;
+					Player[NumberCell - 1] = NumberCell;
+
+					// Check whether the player has won
+					for (int j = 0; j < 8; j++)
+					{
+						for (int z = 0; z < 3; z++)
+						{
+							if (WinsCombinations[j, z] == Player[WinsCombinations[j, z] - 1])
+							{
+								test++;
+							}
+						}
+						if (test == 3)
+						{
+							Console.Clear();
+							Console.WriteLine(Cells);
+							Console.WriteLine("Player Won");
+							Console.ReadKey();
+							finish = true;
+							break;
+						}
+						test = 0;
+					}
+					//
+
+					// Check whether the party is over
+					if (introduced == 9)
 					{
 						Console.Clear();
 						Console.WriteLine(Cells);
-						Console.WriteLine("Player Won");
-						Console.ReadKey();
-						finish = true;
 						break;
 					}
-					test = 0;
-				}
-				//
+					//
 
-				if (introduced == 9)
-				{
 					Console.Clear();
 					Console.WriteLine(Cells);
-					break;
-				}
 
-				Console.Clear();
-				Console.WriteLine(Cells);
+					// Check whether anyone has won
+					if (finish == true) { break; }
+					//
 
-				if (finish == true) { break; }
-
-				//Console.Clear();
-				//Console.WriteLine(Cells);
-
-				
-				do
-				{
-					Random random = new Random();
-					NumberCell = random.Next(1, 9);
-				}
-				while (NumberCell != FreeCells[NumberCell - 1]);
-
-				introduced++;
-				Console.WriteLine(NumberCell);
-				str = Convert.ToString(NumberCell);
-				Cells = Cells.Replace(str, "o");
-				FreeCells[NumberCell - 1] = 0;
-				Bot[NumberCell - 1] = NumberCell;
-				Console.WriteLine(Cells);
-				////
-
-				// Check whether the bot has won
-				for (int j = 0; j < 8; j++)
-				{
-					for (int z = 0; z < 3; z++)
+					// generation of bot progress
+					do
 					{
-						if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
+						Random random = new Random();
+						NumberCell = random.Next(1, 9);
+					}
+					while (NumberCell != FreeCells[NumberCell - 1]);
+					//
+
+					//
+					introduced++;
+					Console.WriteLine(NumberCell);
+					str = Convert.ToString(NumberCell);
+					Cells = Cells.Replace(str, "o");
+					FreeCells[NumberCell - 1] = 0;
+					Bot[NumberCell - 1] = NumberCell;
+					Console.WriteLine(Cells);
+					//
+
+					// Check whether the bot has won
+					for (int j = 0; j < 8; j++)
+					{
+						for (int z = 0; z < 3; z++)
 						{
-							test++;
+							if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
+							{
+								test++;
+							}
 						}
-					}
-					if (test == 3)
-					{
+						if (test == 3)
+						{
 
-						Console.Clear();
-						Console.WriteLine(Cells);
-						Console.WriteLine("Bot Won");
-						Console.ReadKey();
-						finish = true;
-						break;
+							Console.Clear();
+							Console.WriteLine(Cells);
+							Console.WriteLine("Bot Won");
+							Console.ReadKey();
+							finish = true;
+							break;
+						}
+						test = 0;
 					}
-					test = 0;
+					//
+
+					Console.Clear();
+					Console.WriteLine(Cells);
+
+					// Check whether anyone has won
+					if (finish == true) { break; }
+					//
+
+				} // game
+
+				if (finish == false)
+				{
+					Console.WriteLine("Draw");
+					Console.ReadKey();
 				}
-				//
+
 				Console.Clear();
 				Console.WriteLine(Cells);
-
-				if (finish == true) { break; }
+				Console.WriteLine("Continue? (y/n)");
+				YesOrNo = Console.ReadKey();
 			}
-			if (finish == false)
-			{
-				Console.WriteLine("Draw"); 
-			}
-			Console.WriteLine("FINISH");
-			Console.ReadKey();
+			while (YesOrNo.Key != ConsoleKey.N);
 		}
 	}
 }
