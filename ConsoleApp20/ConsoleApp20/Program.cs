@@ -62,8 +62,10 @@ namespace ConsoleApp20
 						catch (Exception)
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
+							Console.Clear();
 							Console.WriteLine("Enter Number 1-9");
 							Console.ForegroundColor = ConsoleColor.White;
+							Console.WriteLine(Cells);
 						}
 					}
 					//
@@ -74,6 +76,7 @@ namespace ConsoleApp20
 					Cells = Cells.Replace(str, "x");
 					FreeCells[NumberCell - 1] = 0;
 					Player[NumberCell - 1] = NumberCell;
+					//
 
 					// Check whether the player has won
 					for (int j = 0; j < 8; j++)
