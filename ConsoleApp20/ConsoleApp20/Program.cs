@@ -36,25 +36,40 @@ namespace ConsoleApp20
 			int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			int NumberCell;
 			int test = 0;
+			int introduced = 0;
 			bool finish = false;
 
-			for (int i = 0; i < 9; i++)
-			{
-				Console.WriteLine(Cells);
-				//
-				do
-				{
-					NumberCell = int.Parse(Console.ReadLine());
-				}
-				while (NumberCell != FreeCells[NumberCell - 1]);
+			Console.WriteLine(Cells);
 
+			while(true)
+			{
+				//
+				while (true)
+				{
+					try
+					{
+						do
+						{
+							NumberCell = int.Parse(Console.ReadLine());
+						}
+						while (NumberCell != FreeCells[NumberCell - 1]);
+						break;
+					}
+					catch (Exception)
+					{
+						Console.ForegroundColor = ConsoleColor.Red;
+						Console.WriteLine("Enter Number 1-9");
+						Console.ForegroundColor = ConsoleColor.White;
+					}
+				}
+
+				introduced++;
 				string str = Convert.ToString(NumberCell);
 				Cells = Cells.Replace(str, "x");
 				FreeCells[NumberCell - 1] = 0;
 				Player[NumberCell - 1] = NumberCell;
-				//
-
-				///
+				
+				// Check whether the player has won
 				for (int j = 0; j < 8; j++)
 				{
 					for (int z = 0; z < 3; z++)
@@ -66,6 +81,8 @@ namespace ConsoleApp20
 					}
 					if (test == 3)
 					{
+						Console.Clear();
+						Console.WriteLine(Cells);
 						Console.WriteLine("Player Won");
 						Console.ReadKey();
 						finish = true;
@@ -73,14 +90,24 @@ namespace ConsoleApp20
 					}
 					test = 0;
 				}
-				///
+				//
+
+				if (introduced == 9)
+				{
+					Console.Clear();
+					Console.WriteLine(Cells);
+					break;
+				}
 
 				Console.Clear();
-				//Console.WriteLine(Cells);
+				Console.WriteLine(Cells);
 
 				if (finish == true) { break; }
 
-				////
+				//Console.Clear();
+				//Console.WriteLine(Cells);
+
+				
 				do
 				{
 					Random random = new Random();
@@ -88,15 +115,16 @@ namespace ConsoleApp20
 				}
 				while (NumberCell != FreeCells[NumberCell - 1]);
 
+				introduced++;
 				Console.WriteLine(NumberCell);
 				str = Convert.ToString(NumberCell);
 				Cells = Cells.Replace(str, "o");
 				FreeCells[NumberCell - 1] = 0;
 				Bot[NumberCell - 1] = NumberCell;
-				//Console.WriteLine(Cells);
+				Console.WriteLine(Cells);
 				////
 
-				/////
+				// Check whether the bot has won
 				for (int j = 0; j < 8; j++)
 				{
 					for (int z = 0; z < 3; z++)
@@ -108,6 +136,9 @@ namespace ConsoleApp20
 					}
 					if (test == 3)
 					{
+
+						Console.Clear();
+						Console.WriteLine(Cells);
 						Console.WriteLine("Bot Won");
 						Console.ReadKey();
 						finish = true;
@@ -115,10 +146,9 @@ namespace ConsoleApp20
 					}
 					test = 0;
 				}
-				/////
-
-				Console.WriteLine(Cells);
+				//
 				Console.Clear();
+				Console.WriteLine(Cells);
 
 				if (finish == true) { break; }
 			}
