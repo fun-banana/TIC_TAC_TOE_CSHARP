@@ -233,7 +233,8 @@ namespace ConsoleApp20
 				if (finish == false)
 				{
 					Console.WriteLine("Draw");
-					Console.ReadKey();
+					Thread.Sleep(1500);
+					//Console.ReadKey();
 				}
 
 				Console.Clear();
