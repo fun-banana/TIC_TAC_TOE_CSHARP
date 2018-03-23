@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleApp20
 {
@@ -39,8 +39,10 @@ namespace ConsoleApp20
 				int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 				int NumberCell;
 				int test = 0;
+				int check = 0;
 				int introduced = 0;
 				bool finish = false;
+				ConsoleKeyInfo NumCell;
 
 				Console.Clear();
 				Console.WriteLine(Cells);
@@ -54,13 +56,20 @@ namespace ConsoleApp20
 						{
 							do
 							{
-								NumberCell = int.Parse(Console.ReadLine());
+								NumCell = Console.ReadKey();
+								if (Convert.ToInt32(NumCell.Key) < 65)
+									NumberCell = Convert.ToInt32(NumCell.Key) - 48;
+								else
+									NumberCell = Convert.ToInt32(NumCell.Key) - 96;
+								Console.Clear();
+								Console.WriteLine(Cells);
 							}
 							while (NumberCell != FreeCells[NumberCell - 1]);
 							break;
 						}
 						catch (Exception)
 						{
+							Console.Clear();
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.Clear();
 							Console.WriteLine("Enter Number 1-9");
@@ -93,7 +102,8 @@ namespace ConsoleApp20
 							Console.Clear();
 							Console.WriteLine(Cells);
 							Console.WriteLine("Player Won");
-							Console.ReadKey();
+							Thread.Sleep(1500);
+							//Console.ReadKey();
 							finish = true;
 							break;
 						}
@@ -120,8 +130,60 @@ namespace ConsoleApp20
 					// generation of bot progress
 					do
 					{
-						Random random = new Random();
-						NumberCell = random.Next(1, 9);
+						bool find = false;
+						for (int k = 2; k > 0; k--) 
+						{
+							for (int j = 0; j < 8; j++)
+							{
+								int free = 0;
+								check = 0;
+								for (int z = 0; z < 3; z++)
+								{
+									if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
+									{
+										check++;
+									}
+								}
+
+								if (k == check)
+								{
+									for (int y = 0; y < 3; y++)
+									{
+										if (WinsCombinations[j, y] == FreeCells[WinsCombinations[j, y] - 1])
+										{
+											free++;
+										}
+									}
+								}
+								if (free == 3 - k)
+								{
+									//Console.WriteLine(find);
+									//Console.ReadKey();
+									Random random = new Random();
+									for ( int a = 0; a < 3; a++)
+									{
+										NumberCell = WinsCombinations[j, a];
+										if (NumberCell == FreeCells[NumberCell - 1])
+										{
+											find = true;
+											break;
+										}
+									}
+								}
+							}
+
+							if (find == true)
+							{
+								break;
+							}
+						}
+
+							if (find == false)
+							{
+								Random random = new Random();
+								NumberCell = random.Next(1, 9);
+								//Console.WriteLine("Random");
+							}
 					}
 					while (NumberCell != FreeCells[NumberCell - 1]);
 					//
@@ -148,18 +210,17 @@ namespace ConsoleApp20
 						}
 						if (test == 3)
 						{
-
 							Console.Clear();
 							Console.WriteLine(Cells);
 							Console.WriteLine("Bot Won");
-							Console.ReadKey();
+							//Console.ReadKey();
+							Thread.Sleep(1500);
 							finish = true;
 							break;
 						}
 						test = 0;
 					}
 					//
-
 					Console.Clear();
 					Console.WriteLine(Cells);
 
