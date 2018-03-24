@@ -55,20 +55,31 @@ namespace ConsoleApp20
 					bool finish = false;
 					ConsoleKeyInfo NumCell;
 
-					Console.Clear();
-					Console.WriteLine(Cells);
 
 					if (Level.Key == ConsoleKey.P)
 					{
+						Console.Clear();
 						while (true)
 						{
-							Console.ForegroundColor = ConsoleColor.Red;
-							Console.WriteLine("fanaticism will lead to the result but will take away everything that was dear to you ");
-							Console.Write("fanaticism will lead to the result but will take away everything that was dear to you ");
+							Console.WriteLine("Finish it");
+							Console.Write("P");
+							string p = Console.ReadLine();
+							if (p.Contains("olinka"))
+							{
+								while (true)
+								{
+									Console.ForegroundColor = ConsoleColor.Red;
+									Console.WriteLine("fanaticism will lead to the result but will take away everything that was dear to you ");
+									Console.Write("fanaticism will lead to the result but will take away everything that was dear to you ");
+								}
+							}
 						}
 					}
 
-					while (true) // One game
+				Console.Clear();
+				Console.WriteLine(Cells);
+
+				while (true) // One game
 					{
 						// Input player progress
 						while (true)
