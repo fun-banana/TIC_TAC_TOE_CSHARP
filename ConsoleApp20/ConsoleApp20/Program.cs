@@ -28,6 +28,8 @@ namespace ConsoleApp20
 
 		static void Main(string[] args)
 		{
+			while (true)
+			{
 				ConsoleKeyInfo Chose;
 				ConsoleKeyInfo Level;
 				int lose = 0;
@@ -35,14 +37,15 @@ namespace ConsoleApp20
 				do
 				{
 					Console.Clear();
-					Console.WriteLine("Select difficulty level  \nEasy ( e ) \nMedium ( m )  \nHard ( h ) ");
+					Console.WriteLine("Select difficulty level  \n\nEasy ( e ) \nMedium ( m )  \nHard ( h ) \n\nClose Program ( c )");
 					Level = Console.ReadKey();
-				} while (Level.Key != ConsoleKey.E && Level.Key != ConsoleKey.M && Level.Key != ConsoleKey.H && Level.Key != ConsoleKey.P);
+				} while (Level.Key != ConsoleKey.E && Level.Key != ConsoleKey.M && Level.Key != ConsoleKey.H && Level.Key != ConsoleKey.P && Level.Key != ConsoleKey.C);
 
+				if (Level.Key == ConsoleKey.C)
+					break;
 
 				do
 				{
-
 					string Cells = "  ╔═╦═╦═╗\n  ║1║2║3║\n  ╠═╬═╬═╣\n  ║4║5║6║\n  ╠═╬═╬═╣\n  ║7║8║9║\n  ╚═╩═╩═╝";
 					int[,] WinsCombinations = new int[8, 3] { { 3, 5, 7 }, { 1, 5, 9 }, { 3, 6, 9 }, { 7, 8, 9 }, { 1, 2, 3 }, { 1, 4, 7 }, { 2, 5, 8 }, { 4, 5, 6 } };
 					int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -62,7 +65,7 @@ namespace ConsoleApp20
 						while (true)
 						{
 							Console.WriteLine("Finish it");
-							Console.Write("P");
+							Console.Write("P ");
 							string p = Console.ReadLine();
 							if (p.Contains("olinka"))
 							{
@@ -76,10 +79,10 @@ namespace ConsoleApp20
 						}
 					}
 
-				Console.Clear();
-				Console.WriteLine(Cells);
+					Console.Clear();
+					Console.WriteLine(Cells);
 
-				while (true) // One game
+					while (true) // One game
 					{
 						// Input player progress
 						while (true)
@@ -347,6 +350,7 @@ namespace ConsoleApp20
 					Chose = Console.ReadKey();
 				}
 				while (Chose.Key != ConsoleKey.N);
-			} 
+			}
+		}
 	}
 }
