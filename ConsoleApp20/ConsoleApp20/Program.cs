@@ -29,6 +29,11 @@ namespace ConsoleApp20
 		static void Main(string[] args)
 		{
 			ConsoleKeyInfo YesOrNo;
+			ConsoleKeyInfo Level;
+
+			Console.WriteLine("Select difficulty level [ Easy ( e ) or  Medium ( m ) or Hard ( h ) ]");
+			Level = Console.ReadKey();
+
 
 			do
 			{
@@ -44,6 +49,9 @@ namespace ConsoleApp20
 				bool finish = false;
 				ConsoleKeyInfo NumCell;
 
+				//Console.Clear();
+				//Console.WriteLine("Select difficulty level [ Easy ( e ) or  Medium ( m ) or Hard ( h ) ]");
+				//Level = Console.ReadKey();
 				Console.Clear();
 				Console.WriteLine(Cells);
 
@@ -133,88 +141,94 @@ namespace ConsoleApp20
 						bool find = false;
 
 						//
-						for (int x = 0; x < 8; x++)
+						if (Level.Key == ConsoleKey.M || Level.Key == ConsoleKey.H)
 						{
-							test = 0;
-							for (int z = 0; z < 3; z++)
+							//
+							for (int k = 2; k > 0; k--)
 							{
-								if (WinsCombinations[x, z] == Player[WinsCombinations[x, z] - 1])
+								if (find == true)
+									break;
+
+								if (k == 1)
 								{
-									test++;
-								}
-							}
-							if (test == 2)
-							{
-								for (int z = 0; z < 3; z++)
-								{
-									if (WinsCombinations[x, z] == FreeCells[WinsCombinations[x, z] - 1])
+									///
+									for (int x = 0; x < 8; x++)
 									{
-										NumberCell = WinsCombinations[x, z];
-										find = true;
-										break;
-									}
-								}
-							}
-
-							if (find == true)
-								break;
-
-							test = 0;
-
-						}
-						//
-
-						//
-						for (int k = 2; k > 0; k--) 
-						{
-							if (find == true)
-								break;
-
-							for (int j = 0; j < 8; j++)
-							{
-								int free = 0;
-								check = 0;
-								for (int z = 0; z < 3; z++)
-								{
-									if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
-									{
-										check++;
-									}
-								}
-
-								if (k == check)
-								{
-									for (int y = 0; y < 3; y++)
-									{
-										if (WinsCombinations[j, y] == FreeCells[WinsCombinations[j, y] - 1])
+										test = 0;
+										for (int z = 0; z < 3; z++)
 										{
-											free++;
+											if (WinsCombinations[x, z] == Player[WinsCombinations[x, z] - 1])
+											{
+												test++;
+											}
 										}
-									}
-								}
-								if (free == 3 - k)
-								{
-									//Console.WriteLine(find);
-									//Console.ReadKey();
-									Random random = new Random();
-									for ( int a = 0; a < 3; a++)
-									{
-										NumberCell = WinsCombinations[j, a];
-										if (NumberCell == FreeCells[NumberCell - 1])
+										if (test == 2)
 										{
-											find = true;
+											for (int z = 0; z < 3; z++)
+											{
+												if (WinsCombinations[x, z] == FreeCells[WinsCombinations[x, z] - 1])
+												{
+													NumberCell = WinsCombinations[x, z];
+													find = true;
+													break;
+												}
+											}
+										}
+
+										if (find == true)
 											break;
+
+										test = 0;
+
+									}
+									///
+								}
+
+								for (int j = 0; j < 8; j++)
+								{
+									int free = 0;
+									check = 0;
+									for (int z = 0; z < 3; z++)
+									{
+										if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
+										{
+											check++;
+										}
+									}
+
+									if (k == check)
+									{
+										for (int y = 0; y < 3; y++)
+										{
+											if (WinsCombinations[j, y] == FreeCells[WinsCombinations[j, y] - 1])
+											{
+												free++;
+											}
+										}
+									}
+									if (free == 3 - k)
+									{
+										//Console.WriteLine(find);
+										//Console.ReadKey();
+										Random random = new Random();
+										for (int a = 0; a < 3; a++)
+										{
+											NumberCell = WinsCombinations[j, a];
+											if (NumberCell == FreeCells[NumberCell - 1])
+											{
+												find = true;
+												break;
+											}
 										}
 									}
 								}
-							}
 
-							if (find == true)
-							{
-								break;
+								if (find == true)
+								{
+									break;
+								}
 							}
 						}
-
 							if (find == false)
 							{
 								Random random = new Random();
@@ -222,6 +236,8 @@ namespace ConsoleApp20
 								//Console.WriteLine("Random");
 							}
 					}
+					
+					//
 					while (NumberCell != FreeCells[NumberCell - 1]);
 					//
 
