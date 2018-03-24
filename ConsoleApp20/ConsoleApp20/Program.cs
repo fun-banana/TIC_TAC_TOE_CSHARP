@@ -131,8 +131,45 @@ namespace ConsoleApp20
 					do
 					{
 						bool find = false;
+
+						//
+						for (int x = 0; x < 8; x++)
+						{
+							test = 0;
+							for (int z = 0; z < 3; z++)
+							{
+								if (WinsCombinations[x, z] == Player[WinsCombinations[x, z] - 1])
+								{
+									test++;
+								}
+							}
+							if (test == 2)
+							{
+								for (int z = 0; z < 3; z++)
+								{
+									if (WinsCombinations[x, z] == FreeCells[WinsCombinations[x, z] - 1])
+									{
+										NumberCell = WinsCombinations[x, z];
+										find = true;
+										break;
+									}
+								}
+							}
+
+							if (find == true)
+								break;
+
+							test = 0;
+
+						}
+						//
+
+						//
 						for (int k = 2; k > 0; k--) 
 						{
+							if (find == true)
+								break;
+
 							for (int j = 0; j < 8; j++)
 							{
 								int free = 0;
@@ -196,6 +233,7 @@ namespace ConsoleApp20
 					FreeCells[NumberCell - 1] = 0;
 					Bot[NumberCell - 1] = NumberCell;
 					Console.WriteLine(Cells);
+					test = 0;
 					//
 
 					// Check whether the bot has won
