@@ -31,14 +31,18 @@ namespace ConsoleApp20
 			ConsoleKeyInfo YesOrNo;
 			ConsoleKeyInfo Level;
 
-			Console.WriteLine("Select difficulty level [ Easy ( e ) or  Medium ( m ) or Hard ( h ) ]");
-			Level = Console.ReadKey();
+			do
+			{
+				Console.Clear();
+				Console.WriteLine("Select difficulty level  \nEasy ( e ) \nMedium ( m )  \nHard ( h ) ");
+				Level = Console.ReadKey();
+			} while (Level.Key != ConsoleKey.E && Level.Key != ConsoleKey.M && Level.Key != ConsoleKey.H);
 
 
 			do
 			{
 				string Cells = "  ╔═╦═╦═╗\n  ║1║2║3║\n  ╠═╬═╬═╣\n  ║4║5║6║\n  ╠═╬═╬═╣\n  ║7║8║9║\n  ╚═╩═╩═╝";
-				int[,] WinsCombinations = new int[8, 3] { { 2, 5, 8 }, { 3, 5, 7 }, { 1, 5, 9 }, { 4, 5, 6 }, { 1, 2, 3 }, { 1, 4, 7 }, { 7, 8, 9 }, { 3, 6, 9 } };
+				int[,] WinsCombinations = new int[8, 3] { { 3, 5, 7 }, { 1, 5, 9 }, { 3, 6, 9 }, { 7, 8, 9 }, { 1, 2, 3 }, { 1, 4, 7 }, { 2, 5, 8 }, { 4, 5, 6 } }; 
 				int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 				int[] Player = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 				int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -49,9 +53,6 @@ namespace ConsoleApp20
 				bool finish = false;
 				ConsoleKeyInfo NumCell;
 
-				//Console.Clear();
-				//Console.WriteLine("Select difficulty level [ Easy ( e ) or  Medium ( m ) or Hard ( h ) ]");
-				//Level = Console.ReadKey();
 				Console.Clear();
 				Console.WriteLine(Cells);
 
@@ -179,64 +180,89 @@ namespace ConsoleApp20
 											break;
 
 										test = 0;
-
 									}
 									///
 								}
-
-								for (int j = 0; j < 8; j++)
+								if (find == false)
 								{
-									int free = 0;
-									check = 0;
-									for (int z = 0; z < 3; z++)
+									for (int j = 0; j < 8; j++)
 									{
-										if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
+										int free = 0;
+										check = 0;
+										for (int z = 0; z < 3; z++)
 										{
-											check++;
-										}
-									}
-
-									if (k == check)
-									{
-										for (int y = 0; y < 3; y++)
-										{
-											if (WinsCombinations[j, y] == FreeCells[WinsCombinations[j, y] - 1])
+											if (WinsCombinations[j, z] == Bot[WinsCombinations[j, z] - 1])
 											{
-												free++;
+												check++;
 											}
 										}
-									}
-									if (free == 3 - k)
-									{
-										//Console.WriteLine(find);
-										//Console.ReadKey();
-										Random random = new Random();
-										for (int a = 0; a < 3; a++)
+
+										if (k == check)
 										{
-											NumberCell = WinsCombinations[j, a];
-											if (NumberCell == FreeCells[NumberCell - 1])
+											for (int y = 0; y < 3; y++)
 											{
-												find = true;
-												break;
+												if (WinsCombinations[j, y] == FreeCells[WinsCombinations[j, y] - 1])
+												{
+													free++;
+												}
+											}
+										}
+										if (free == 3 - k)
+										{
+											//Console.WriteLine(find);
+											//Console.ReadKey();
+											//Random random = new Random();
+											for (int a = 0; a < 3; a++)
+											{
+												NumberCell = WinsCombinations[j, a];
+												if (NumberCell == FreeCells[NumberCell - 1])
+												{
+													find = true;
+													break;
+												}
 											}
 										}
 									}
 								}
 
 								if (find == true)
-								{
 									break;
-								}
 							}
 						}
-							if (find == false)
+
+						if (find == false)
+						{
+							if (Level.Key == ConsoleKey.H)
+							{
+								if (FreeCells[4] == 5)
+								{
+									NumberCell = 5;
+									find = true;
+								}
+								else
+								{
+									do
+									{
+										int[] numberrss = new int[4] { 1, 3, 7, 9 };
+										Random random = new Random();
+										NumberCell = numberrss[random.Next(0, 3)];
+										find = true;
+									} while (NumberCell != FreeCells[NumberCell - 1]);
+
+								}
+
+							}
+						}
+
+
+						if (find == false)
 							{
 								Random random = new Random();
 								NumberCell = random.Next(1, 9);
 								//Console.WriteLine("Random");
+								//Console.ReadKey();
 							}
 					}
-					
 					//
 					while (NumberCell != FreeCells[NumberCell - 1]);
 					//
