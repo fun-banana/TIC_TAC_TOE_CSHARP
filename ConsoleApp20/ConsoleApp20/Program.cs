@@ -38,7 +38,13 @@ namespace ConsoleApp20
 				do
 				{
 					Console.Clear();
-					Console.WriteLine("Select difficulty level  \n\nEasy ( e ) \nMedium ( m )  \nHard ( h ) \n\nClose Program ( c )");
+					Console.ForegroundColor = ConsoleColor.Green;
+					Console.WriteLine("Select difficulty level");
+					Console.ForegroundColor = ConsoleColor.White;
+					Console.WriteLine("\nEasy   ( e ) \nMedium ( m )  \nHard   ( h )");
+					Console.ForegroundColor = ConsoleColor.Magenta;
+					Console.WriteLine("\nClose Program ( c )");
+					Console.ForegroundColor = ConsoleColor.White;
 					Level = Console.ReadKey();
 				} while (Level.Key != ConsoleKey.E && Level.Key != ConsoleKey.M && Level.Key != ConsoleKey.H && Level.Key != ConsoleKey.P && Level.Key != ConsoleKey.C);
 
@@ -339,8 +345,8 @@ namespace ConsoleApp20
 							{
 								Random random = new Random();
 								NumberCell = random.Next(1, 9);
-								Console.WriteLine("Random");
-								Console.ReadKey();
+								//Console.WriteLine("Random");
+								//Console.ReadKey();
 							}
 						}
 						//
