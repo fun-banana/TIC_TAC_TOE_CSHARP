@@ -32,7 +32,8 @@ namespace ConsoleApp20
 			{
 				ConsoleKeyInfo Chose;
 				ConsoleKeyInfo Level;
-				int lose = 0;
+
+				Console.ForegroundColor = ConsoleColor.White;
 
 				do
 				{
@@ -47,27 +48,47 @@ namespace ConsoleApp20
 				do
 				{
 					string Cells = "  ╔═╦═╦═╗\n  ║1║2║3║\n  ╠═╬═╬═╣\n  ║4║5║6║\n  ╠═╬═╬═╣\n  ║7║8║9║\n  ╚═╩═╩═╝";
-					int[,] WinsCombinations = new int[8, 3] { { 3, 5, 7 }, { 1, 5, 9 }, { 3, 6, 9 }, { 7, 8, 9 }, { 1, 2, 3 }, { 1, 4, 7 }, { 2, 5, 8 }, { 4, 5, 6 } };
+					int[,] Combinations = new int[8, 3] { { 3, 5, 7 }, { 1, 5, 9 }, { 3, 6, 9 }, { 7, 8, 9 }, { 1, 2, 3 }, { 1, 4, 7 }, { 2, 5, 8 }, { 4, 5, 6 } };
+					int[,] WinsCombinations = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 					int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 					int[] Player = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 					int[] Bot = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 					int NumberCell;
 					int test = 0;
 					int check = 0;
+					int q = 0;
 					int introduced = 0;
 					bool finish = false;
 					ConsoleKeyInfo NumCell;
 
+					// Random array array generation
+					while ( q < 8 )
+					{
+						Random ran = new Random();
+						int Combination = ran.Next(0, 8);
+						if (Combinations[Combination, 1] != 0)
+						{
+							for (int z = 0; z < 3; z++)
+							{
+								WinsCombinations[q, z] = Combinations[Combination, z];
+								Combinations[Combination, z] = 0;
+							}
+							q++;
+						}
+					}
+					//
 
+					// Secret
 					if (Level.Key == ConsoleKey.P)
 					{
 						Console.Clear();
 						while (true)
 						{
-							Console.WriteLine("Finish it");
-							Console.Write("P ");
+							Console.ForegroundColor = ConsoleColor.Cyan;
+							Console.WriteLine("Finish it ");
+							Console.Write("P");
 							string p = Console.ReadLine();
-							if (p.Contains("olinka"))
+							if (p.Contains("oLiNkA"))
 							{
 								while (true)
 								{
@@ -78,11 +99,13 @@ namespace ConsoleApp20
 							}
 						}
 					}
+					//
 
 					Console.Clear();
 					Console.WriteLine(Cells);
 
-					while (true) // One game
+					// One game
+					while (true) 
 					{
 						// Input player progress
 						while (true)
@@ -162,12 +185,11 @@ namespace ConsoleApp20
 						if (finish == true) { break; }
 						//
 
-						// generation of bot progress
+						// Generation of bot progress
 						do
 						{
 							bool find = false;
-
-							//
+							// Generation of bot progress for midle level and hard level
 							if (Level.Key == ConsoleKey.M || Level.Key == ConsoleKey.H)
 							{
 								//
@@ -260,23 +282,55 @@ namespace ConsoleApp20
 							{
 								if (Level.Key == ConsoleKey.H)
 								{
-									if (FreeCells[4] == 5)
+									int[] AllNumbers = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+									Random ran = new Random();
+									int max = 0;
+
+									for (int j = 0; j < 9; j++)
 									{
-										NumberCell = 5;
-										find = true;
+										AllNumbers[j] = FreeCells[j];
 									}
-									else
+
+									for (int i = 0; i < 8; i++)
 									{
-										do
+										check = 0;
+										int number = 0;
+										for (int j = 0; j < 8; j++)
 										{
-											int[] numberrss = new int[4] { 1, 3, 7, 9 };
-											Random random = new Random();
-											NumberCell = numberrss[random.Next(0, 4)];
-											find = true;
-										} while (NumberCell != FreeCells[NumberCell - 1]);
+											test = 0;
+											for (int z = 0; z < 3; z++)
+											{
+												if (WinsCombinations[j, z] == FreeCells[WinsCombinations[j, z] - 1])
+												{
+													test++;
+												}
+											}
+											if (test == 3)
+											{
 
+												while (number == 0) 
+												{
+													number = ran.Next(0, 9);
+													number = AllNumbers[number];
+												}
+
+												for (int z = 0; z < 3; z++)
+												{
+													if (WinsCombinations[j, z] == number)
+													{
+														check++;
+													}
+												}
+												AllNumbers[number-1] = 0;
+											}
+											if (check > max)
+											{
+												max = check;
+												NumberCell = number;
+												find = true;
+											}
+										}
 									}
-
 								}
 							}
 
@@ -285,8 +339,8 @@ namespace ConsoleApp20
 							{
 								Random random = new Random();
 								NumberCell = random.Next(1, 9);
-								//Console.WriteLine("Random");
-								//Console.ReadKey();
+								Console.WriteLine("Random");
+								Console.ReadKey();
 							}
 						}
 						//
@@ -319,7 +373,7 @@ namespace ConsoleApp20
 								Console.Clear();
 								Console.WriteLine(Cells);
 								Console.WriteLine("Bot Won");
-								lose++;
+								//lose++;
 								//Console.ReadKey();
 								Thread.Sleep(1500);
 								finish = true;
