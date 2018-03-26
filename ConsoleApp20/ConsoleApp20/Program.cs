@@ -26,6 +26,14 @@ namespace ConsoleApp20
 		//Console.WriteLine("║7║8║9║");
 		//Console.WriteLine("╚═╩═╩═╝");
 
+		//Console.WriteLine("╔═══╦═══╦═══╗");
+		//Console.WriteLine("║ 1 ║ 2 ║ 3 ║");
+		//Console.WriteLine("╠═══╬═══╬═══╣");
+		//Console.WriteLine("║ 4 ║ 5 ║ 6 ║");
+		//Console.WriteLine("╠═══╬═══╬═══╣");
+		//Console.WriteLine("║ 7 ║ 8 ║ 9 ║");
+		//Console.WriteLine("╚═══╩═══╩═══╝");
+
 		static void Main(string[] args)
 		{
 			while (true)
@@ -53,7 +61,7 @@ namespace ConsoleApp20
 
 				do
 				{
-					string Cells = "  ╔═╦═╦═╗\n  ║1║2║3║\n  ╠═╬═╬═╣\n  ║4║5║6║\n  ╠═╬═╬═╣\n  ║7║8║9║\n  ╚═╩═╩═╝";
+					string Cells = "  ╔═══╦═══╦═══╗\n  ║ 1 ║ 2 ║ 3 ║\n  ╠═══╬═══╬═══╣\n  ║ 4 ║ 5 ║ 6 ║\n  ╠═══╬═══╬═══╣\n  ║ 7 ║ 8 ║ 9 ║\n  ╚═══╩═══╩═══╝";
 					int[,] Combinations = new int[8, 3] { { 3, 5, 7 }, { 1, 5, 9 }, { 3, 6, 9 }, { 7, 8, 9 }, { 1, 2, 3 }, { 1, 4, 7 }, { 2, 5, 8 }, { 4, 5, 6 } };
 					int[,] WinsCombinations = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 					int[] FreeCells = new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -165,7 +173,9 @@ namespace ConsoleApp20
 							{
 								Console.Clear();
 								Console.WriteLine(Cells);
+								Console.ForegroundColor = ConsoleColor.Green;
 								Console.WriteLine("Player Won");
+								Console.ForegroundColor = ConsoleColor.White;
 								Thread.Sleep(1500);
 								//Console.ReadKey();
 								finish = true;
@@ -378,7 +388,9 @@ namespace ConsoleApp20
 							{
 								Console.Clear();
 								Console.WriteLine(Cells);
+								Console.ForegroundColor = ConsoleColor.Magenta;
 								Console.WriteLine("Bot Won");
+								Console.ForegroundColor = ConsoleColor.White;
 								//lose++;
 								//Console.ReadKey();
 								Thread.Sleep(1500);
@@ -399,14 +411,18 @@ namespace ConsoleApp20
 
 					if (finish == false)
 					{
+						Console.ForegroundColor = ConsoleColor.Yellow;
 						Console.WriteLine("Draw");
+						Console.ForegroundColor = ConsoleColor.White;
 						Thread.Sleep(1500);
 						//Console.ReadKey();
 					}
 
 					Console.Clear();
 					Console.WriteLine(Cells);
+					Console.ForegroundColor = ConsoleColor.Yellow;
 					Console.WriteLine("Continue? (y/n)");
+					Console.ForegroundColor = ConsoleColor.White;
 					Chose = Console.ReadKey();
 				}
 				while (Chose.Key != ConsoleKey.N);
